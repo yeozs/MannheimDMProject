@@ -1,2 +1,2 @@
-# MannheimDMProject
-Data Mining Project IE500 UMannheim 
+# MannheimWMProject
+Web Mining Project IE671 UMannheim 
