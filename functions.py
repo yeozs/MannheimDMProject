@@ -20,6 +20,7 @@ import regex as re
 import unicodedata
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.stem import WordNetLemmatizer, PorterStemmer
+lemmatizer = WordNetLemmatizer()
 from nltk.corpus import stopwords
 from textblob import TextBlob
 import emoji
