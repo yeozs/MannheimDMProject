@@ -73,6 +73,9 @@ def lstm_preprocessing(dataset: pd.DataFrame, tokenizer=word_tokenize):
     rev_tokenized = [tokenizer(review) for review in reviews_list_lower]
 
 
+    #TODO: Add vectorization (use flag)
+
+
     #Output
     ret_dataset = dataset.copy()
     assert type(ret_dataset) is pd.DataFrame
