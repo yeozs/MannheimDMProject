@@ -2,7 +2,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 vader = SentimentIntensityAnalyzer()
 
 # VADER 
-def vader(review, compound = True):
+def vader_(review, compound = True):
 
     # Get the polarity scores (negative, neutral and positive) for the song
     polarity_scores_ = vader.polarity_scores(review)
