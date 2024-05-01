@@ -23,13 +23,13 @@ def lstm_preprocessing(dataset: pd.DataFrame, tokenizer=word_tokenize):
     np.random.seed(20)
 
     #Create new function to convert Rating scores to 3 categories
-    #1-3, 4-7, 8-10 forms negative, neutral, positive [0,1,2]
+    #1-4, 5-6, 7-10 forms negative, neutral, positive [0,1,2]
     def score_convert_senti(score):
-        if score <= 3:
+        if score <= 4:
             return 0
-        elif score >= 4 and score <= 7:
+        elif score <= 6:
             return 1
-        elif score >= 8:
+        else:
             return 2
 
     #Create new column, convert scoring into 3 categories
