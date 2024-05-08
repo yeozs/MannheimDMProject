@@ -1,7 +1,4 @@
 ### Libraries
-import matplotlib.pyplot as plt
-
-
 ### Preprocessing Function Libraries
 import string
 import re
@@ -84,18 +81,3 @@ def reviews_preprocessor(reviews,
     
     
     return clean_text
-
-
-### Histogram 
-
-def histogram(data):
-    plt.hist(data, bins=22, color='#FF914D', ec='#F16007', alpha=0.7, label='Data Points')  # Adjust the number of bins
-    plt.title('Histogram')
-    plt.xlabel('Values')
-    plt.ylabel('Frequency')
-    plt.legend()
-
-    # Set x-axis limits to include a larger range
-    plt.xlim(min(data), max(data)) 
-
-    plt.show()
