@@ -204,3 +204,32 @@ def train_model(
 
 
 ################ Calculate F1 score for each class ################
+def scoring(y_true, y_pred, labels:list=[0,1,2]):
+
+    f1_dict = {label: 0 for label in labels}
+
+    for label in labels:
+        ## First convert multi-class lists to two classes
+        curr_y_pred = [1 if label == p else 0 for p in y_pred]
+        curr_y_true = [1 if label == p else 0 for p in y_true]
+
+        f1_dict[label] = f1_score(curr_y_true, curr_y_pred)
+
+    return f1_dict
+
+    # cm = confusion_matrix(actual_list, prediction_list)
+    # plt.figure(figsize=(6, 6))
+    # sns.heatmap(cm, annot=True, cmap='Blues')
+    # plt.xlabel('Predicted')
+    # plt.ylabel('Actual')
+    # plt.title('Confusion Matrix of Sentiment (Count)')
+    # plt.show()   
+        
+    # plt.figure(figsize=(6, 6))
+    # sns.heatmap(cm/np.sum(cm), annot=True, cmap='Blues')
+    # plt.xlabel('Predicted')
+    # plt.ylabel('Actual')
+    # plt.title('Confusion Matrix of Sentiment (Percentage)')
+    # plt.show()
+
+    return
