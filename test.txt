@@ -1,6 +1,0 @@
---SPLITING WORK--
-
-BERT --> Yeo
-LSTM --> Zhe Ming
-Lexicon based --> Antonio
-ML Based --> Shiyi and Shudir
