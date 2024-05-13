@@ -20,12 +20,16 @@ def vader_algorithm(review, compound = True):
     return polarity
 
 # TextBlob
-def textblob_sa(song):
+def textblob_sa(review):
 
     # Get the polarity (compounded polarity scores) for the song
-    polarity = TextBlob(song).sentiment.polarity
+    polarity = TextBlob(review).sentiment.polarity
 
     return polarity
+
+def textblob_subjectivity(review):
+    blob = TextBlob(str(review))
+    return blob.sentiment.subjectivity
 
 
 # Histograms
