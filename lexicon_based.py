@@ -33,7 +33,7 @@ def textblob_subjectivity(review):
 
 
 # Histograms
-def plot_sentiment_histograms(dataset, sorted_sentiment, polarity_column):
+def plot_sentiment_histograms(dataset, sorted_sentiment, polarity_column, color='steelblue'):
     # Define the number of rows and columns for subplots
     num_rows = 1
     num_cols = len(sorted_sentiment)
