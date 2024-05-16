@@ -9,6 +9,7 @@ sent_tokenizer = PunktSentenceTokenizer()
 from transformers import BertTokenizer
 from nltk.stem import WordNetLemmatizer
 from nltk.stem import PorterStemmer
+from gensim.models import KeyedVectors
 
 import numpy as np
 import pandas as pd
@@ -102,6 +103,21 @@ def reviews_preprocessor(reviews,
 
 ## LSTM preprocessing
 
+# Load pre-trained GloVe embeddings
+def load_glove_embeddings(filepath):
+    return KeyedVectors.load_word2vec_format(filepath, binary=False)
+
+# Load GloVe embeddings
+glove_embeddings = load_glove_embeddings('path_to_glove/glove.6B.100d.txt')
+
+# Function to get GloVe vector for a token
+def get_glove_vector(token):
+    try:
+        return glove_embeddings[token]
+    except KeyError:
+        # If token not found in GloVe, return zeros
+        return np.zeros(glove_embeddings.vector_size)
+
 def lstm_preprocessing(dataset: pd.DataFrame, tokenizer=word_tokenize):
     random.seed(20)
     np.random.seed(20)
@@ -147,7 +163,12 @@ def lstm_preprocessing(dataset: pd.DataFrame, tokenizer=word_tokenize):
     rev_tokenized = [tokenizer(review) for review in reviews_list_lower]
 
 
-    #TODO: Add vectorization (use flag)
+    # GloVe Vectorization
+    rev_glove_vectors = []
+    for review_tokens in rev_tokenized:
+        glove_vectors = [get_glove_vector(token) for token in review_tokens]
+        rev_glove_vectors.append(glove_vectors)
+
 
 
     #Output
