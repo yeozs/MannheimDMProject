@@ -41,22 +41,30 @@ class ReviewsDataset(Dataset):
         return ret_review, ret_label
     
 
+################ Padding function ################
+def pad_review(review: torch.Tensor, embedding_dim, max_seq_len=MAX_SEQ_LEN):
+
+    padded_review = review
+    pad_tensor = torch.zeros(embedding_dim) ## Pad with zero tensor of size equal to word embeddings
+
+    if len(review) < max_seq_len:
+            padded_review = padded_review + [pad_tensor for i in range(max_seq_len - len(review))]
+    elif len(review) > max_seq_len:
+        padded_review = padded_review[:max_seq_len]
+
+    return padded_review
+
 
 ################ Collate function ################
 ## Function to pad or trim reviews to same number of tokens
-def review_collate_fn(raw_batch, max_seq_len=MAX_SEQ_LEN):
+def review_collate_fn(raw_batch):
     ## Input: Collection of (review, label) tuples from ReviewDataset
 
     padded_reviews = []
     labels = []
-    pad_tensor = torch.zeros(len(raw_batch[0][0][0])) ## Pad with zero tensor of size equal to word embeddings
 
     for (review, label) in raw_batch:
-        padded_review = review
-        if len(review) < max_seq_len:
-            padded_review = padded_review + [pad_tensor for i in range(max_seq_len - len(review))]
-        elif len(review) > max_seq_len:
-            padded_review = padded_review[:max_seq_len]
+        padded_review = pad_review(review, len(raw_batch[0][0][0]))
         padded_reviews.append(padded_review)
         labels.append(label)
     
