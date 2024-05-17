@@ -170,3 +170,33 @@ def _glove_embed(tokenized_reviews):
     print(f'{len(unidentified_tokens)} total tokens not in GloVe model: \n{unidentified_tokens}')
 
     return rev_tokenized_embedded
+
+#preprocessing function for Logreg and Randforrest
+def sentence_level_preprocessing(text):
+     # Convert text to lowercase
+    text = text.astype(str).str.lower()
+    # Remove emojis
+    text = text.apply(lambda x: emoji.demojize(x))
+    text = text.str.replace(r':[a-z_]+:', ' ', regex=True)
+    # Remove special characters and numbers
+    text = text.str.replace(r'[^a-zA-Z\s]', '', regex=True)
+    # Tokenization (split the text into sentences)
+    sentences = text.apply(lambda x: sent_tokenize(x))
+    # Flatten list of sentences
+    sentences = sentences.explode()
+    
+    # POS Tagging
+    tagged_sentences = sentences.apply(word_tokenize).apply(pos_tag)
+    
+    # Parse for sentiment analysis
+    
+    # Tokenization (split the sentences into words)
+    words = tagged_sentences.apply(lambda x: [word for word, tag in x if word not in stopwords.words('english')])
+    
+    # Stemming
+    stemmer = PorterStemmer()
+    words = words.apply(lambda x: [stemmer.stem(word) for word in x])
+    
+    # Join the words back into a single string
+    preprocessed_text = words.str.join(' ')
+    return preprocessed_text
