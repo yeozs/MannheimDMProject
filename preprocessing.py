@@ -108,9 +108,6 @@ def lstm_preprocessing(dataset: pd.DataFrame, tokenizer=word_tokenize):
     random.seed(20)
     np.random.seed(20)
 
-    #Create new column, convert scoring into 3 categories
-    dataset["Sentiment"] = dataset["Overall Rating"].apply(score_convert_senti)
-
     #place reviews column textual data into list
     reviews = dataset["Reviews"]
     reviews_list = list(reviews)
