@@ -180,7 +180,8 @@ def _glove_embed(tokenized_reviews):
     return rev_tokenized_embedded
 
 #preprocessing function for Logreg and Randforrest
-def sentence_level_preprocessing(text):
+
+def preprocess_reviews(text):
     # Convert text to lowercase
     text = text.astype(str).str.lower()
     
@@ -197,12 +198,12 @@ def sentence_level_preprocessing(text):
     # Flatten list of sentences
     sentences = sentences.explode()
     
-    # Tokenize sentences into words and POS tagging
-    tagged_sentences = sentences.apply(lambda x: pos_tag(word_tokenize(x)))
+    # Tokenize sentences into words
+    words = sentences.apply(lambda x: word_tokenize(x))
     
     # Remove stopwords
     stop_words = set(stopwords.words('english'))
-    words = tagged_sentences.apply(lambda x: [word for word, tag in x if word not in stop_words])
+    words = words.apply(lambda x: [word for word in x if word not in stop_words])
     
     # Stemming
     stemmer = PorterStemmer()
