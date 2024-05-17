@@ -6,7 +6,6 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize, PunktSentenceTokenizer
 sent_tokenizer = PunktSentenceTokenizer()
-from transformers import BertTokenizer
 from nltk.stem import WordNetLemmatizer
 from nltk.stem import PorterStemmer
 from gensim.models import KeyedVectors
@@ -49,7 +48,6 @@ def reviews_preprocessor(reviews,
                  remove_punctuation = False,
                  lowercase = False,
                  tokenized_output = False,
-                 bert_tokenization = False,
                  remove_stopwords = True,
                  lemmatization = False,
                  stemming = False,
@@ -90,10 +88,6 @@ def reviews_preprocessor(reviews,
         clean_text = " ".join(clean_text)
         #Remove space before punctuation
         clean_text = re.sub(r'(\s)(?!\w)','',clean_text)
-        
-    elif bert_tokenization:
-        tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-        clean_text = tokenizer.tokenize(clean_text) 
 
     if sentence_output:
         clean_text = sent_tokenize(str(clean_text))
