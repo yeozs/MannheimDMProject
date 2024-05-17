@@ -143,6 +143,7 @@ def lstm_preprocessing(dataset: pd.DataFrame, tokenizer=word_tokenize):
 
     return ret_dataset
 
+    
 
 #internal function to check for emojis
 def _contain_emoji(review):
@@ -180,30 +181,34 @@ def _glove_embed(tokenized_reviews):
 
 #preprocessing function for Logreg and Randforrest
 def sentence_level_preprocessing(text):
-     # Convert text to lowercase
+    # Convert text to lowercase
     text = text.astype(str).str.lower()
+    
     # Remove emojis
     text = text.apply(lambda x: emoji.demojize(x))
     text = text.str.replace(r':[a-z_]+:', ' ', regex=True)
+    
     # Remove special characters and numbers
     text = text.str.replace(r'[^a-zA-Z\s]', '', regex=True)
+    
     # Tokenization (split the text into sentences)
     sentences = text.apply(lambda x: sent_tokenize(x))
+    
     # Flatten list of sentences
     sentences = sentences.explode()
     
-    # POS Tagging
-    # tagged_sentences = sentences.apply(word_tokenize).apply(pos_tag)
+    # Tokenize sentences into words and POS tagging
+    tagged_sentences = sentences.apply(lambda x: pos_tag(word_tokenize(x)))
     
-    # Parse for sentiment analysis
-    
-    # Tokenization (split the sentences into words)
-    words = sentences.apply(lambda x: [word for word, tag in x if word not in stopwords.words('english')])
+    # Remove stopwords
+    stop_words = set(stopwords.words('english'))
+    words = tagged_sentences.apply(lambda x: [word for word, tag in x if word not in stop_words])
     
     # Stemming
     stemmer = PorterStemmer()
-    words = words.apply(lambda x: [stemmer.stem(word) for word in x])
+    stemmed_words = words.apply(lambda x: [stemmer.stem(word) for word in x])
     
     # Join the words back into a single string
-    preprocessed_text = words.str.join(' ')
+    preprocessed_text = stemmed_words.apply(lambda x: ' '.join(x))
+    
     return preprocessed_text
