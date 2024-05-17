@@ -112,13 +112,6 @@ def lstm_preprocessing(dataset: pd.DataFrame, tokenizer=word_tokenize):
     reviews = dataset["Reviews"]
     reviews_list = list(reviews)
 
-    #Remove emojis
-    emoji_check = [_contain_emoji(review) for review in reviews_list]
-    reviews_list_deemojize = reviews_list.copy()
-    for i in range(len(emoji_check)):
-        if emoji_check[i] == True:
-            reviews_list_deemojize[i] = emoji.demojize(reviews_list_deemojize[i], language='en')
-
     #Remove Punctuation
     reviews_list_noPunc = [_remove_punc(review) for review in reviews_list_deemojize]
 
@@ -140,14 +133,6 @@ def lstm_preprocessing(dataset: pd.DataFrame, tokenizer=word_tokenize):
 
     return ret_dataset
 
-    
-
-#internal function to check for emojis
-def _contain_emoji(review):
-    emoList = emoji.emoji_list(review)
-    if emoList:
-        return True
-    return False
 
 
 #internal function for removing punctuations
