@@ -147,7 +147,6 @@ class EarlyStopper():
 
 
 ################ Training function ################
-##TODO: Add logging
 def train_model(
     model:nn.Module, 
     train_loader:DataLoader, 
