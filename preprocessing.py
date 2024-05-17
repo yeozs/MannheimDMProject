@@ -193,12 +193,12 @@ def sentence_level_preprocessing(text):
     sentences = sentences.explode()
     
     # POS Tagging
-    tagged_sentences = sentences.apply(word_tokenize).apply(pos_tag)
+    # tagged_sentences = sentences.apply(word_tokenize).apply(pos_tag)
     
     # Parse for sentiment analysis
     
     # Tokenization (split the sentences into words)
-    words = tagged_sentences.apply(lambda x: [word for word, tag in x if word not in stopwords.words('english')])
+    words = sentences.apply(lambda x: [word for word, tag in x if word not in stopwords.words('english')])
     
     # Stemming
     stemmer = PorterStemmer()
