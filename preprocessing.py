@@ -8,14 +8,21 @@ from nltk.tokenize import word_tokenize, sent_tokenize, PunktSentenceTokenizer
 sent_tokenizer = PunktSentenceTokenizer()
 from nltk.stem import WordNetLemmatizer
 from nltk.stem import PorterStemmer
+from nltk import pos_tag
 from gensim.models import KeyedVectors
 import gensim.downloader as api
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 import emoji
 import string
 import random
+
+plt.style.use('ggplot')
 
 # Download NLTK resources if not already downloaded
 nltk.download('punkt')
