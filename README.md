@@ -9,10 +9,10 @@ This project code is divided in the following sections:
 5_LSTM - Application of an LSTM architecture to our data
 6_ML_XGBoost - Application of ML model XGBoost to our data
 
-1 & 2 consist of data exploration and preprocessing
-3 to 6 consist of the application of diverse models, aiming to make predictions
+1 & 2 consist of data exploration and preprocessing.
+3 to 6 consist of the application of diverse models, aiming to make predictions.
 
-This Repository also contains 2 py files, preprocessing.py and lexicon_based, which include functions used throughout the project.
+This Repository also contains 4 py files, 2 of which preprocessing.py and lexicon_based.py, which include functions used throughout the project. The other 2, lstm_helper and lstm_model, were specifically used in 6.
 
 The Initial Data consists of the airlines_reviews.csv, which after preprocessed was exported as processed_data. The file processed_data was used as input in notebooks 3-6.
 
