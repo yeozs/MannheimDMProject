@@ -1,21 +1,33 @@
+Here's a reformatted version of your README file with improved structure and readability:
+
+---
+
 # MannheimWMProject
-Web Mining Project IE671 UMannheim 
 
-This project code is divided in the following sections:
-1_EDA - Initial Exploration, Data Preprocessing and Visualisations
-2_Lexicon-Based - Usage of Lexicon-Based models to further explore our data
-3_LogReg_RandForest - Application of ML models Logistic Regression and Random Forest to our data
-4_BERT - Application of the pretrained model BERT to our data
-5_LSTM - Application of an LSTM architecture to our data
-6_ML_XGBoost - Application of ML model XGBoost to our data
+## Web Mining Project IE671, University of Mannheim
 
-1 & 2 consist of data exploration and preprocessing.
-3 to 6 consist of the application of diverse models, aiming to make predictions.
+### Project Overview
+This project is organized into the following sections:
 
-This Repository also contains 4 py files, 2 of which preprocessing.py and lexicon_based.py, which include functions used throughout the project. The other 2, lstm_helper and lstm_model, were specifically used in 6.
+1. **1_EDA** - Initial Exploration, Data Preprocessing, and Visualizations
+2. **2_Lexicon-Based** - Application of Lexicon-Based models to explore the data
+3. **3_LogReg_RandForest** - Application of ML models Logistic Regression and Random Forest
+4. **4_BERT** - Application of the pre-trained model BERT
+5. **5_LSTM** - Application of an LSTM architecture
+6. **6_ML_XGBoost** - Application of the ML model XGBoost
 
-The Initial Data consists of the airlines_reviews.csv, which after preprocessed was exported as processed_data. The file processed_data was used as input in notebooks 3-6.
+### Structure
+- **Sections 1 & 2**: Focus on data exploration and preprocessing.
+- **Sections 3 to 6**: Focus on applying various models for predictions.
 
-In this project, our group split tasks, but every member of the group was available to answer questions and solve problems that could arise.
+### Repository Contents
+This repository contains several Python files, including:
 
+- `preprocessing.py` and `lexicon_based.py`: Functions used throughout the project.
+- `lstm_helper.py` and `lstm_model.py`: Functions specifically used in Section 6.
 
+### Data
+The initial dataset, `airlines_reviews.csv`, was preprocessed and exported as `processed_data.csv`. The preprocessed data was then used as input for the notebooks in Sections 3 to 6.
+
+### Collaboration
+Tasks were divided among group members, but everyone was available to answer questions and resolve issues that arose during the project.
