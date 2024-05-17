@@ -143,6 +143,7 @@ def lstm_preprocessing(dataset: pd.DataFrame, tokenizer=word_tokenize):
 
     return ret_dataset
 
+    
 
 #internal function to check for emojis
 def _contain_emoji(review):
