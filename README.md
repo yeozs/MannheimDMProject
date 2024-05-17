@@ -1,7 +1,3 @@
-Here's a reformatted version of your README file with improved structure and readability:
-
----
-
 # MannheimWMProject
 
 ## Web Mining Project IE671, University of Mannheim
