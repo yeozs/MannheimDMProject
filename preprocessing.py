@@ -6,17 +6,23 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize, PunktSentenceTokenizer
 sent_tokenizer = PunktSentenceTokenizer()
-from transformers import BertTokenizer
 from nltk.stem import WordNetLemmatizer
 from nltk.stem import PorterStemmer
+from nltk import pos_tag
 from gensim.models import KeyedVectors
 import gensim.downloader as api
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 import emoji
 import string
 import random
+
+plt.style.use('ggplot')
 
 # Download NLTK resources if not already downloaded
 nltk.download('punkt')
@@ -49,7 +55,6 @@ def reviews_preprocessor(reviews,
                  remove_punctuation = False,
                  lowercase = False,
                  tokenized_output = False,
-                 bert_tokenization = False,
                  remove_stopwords = True,
                  lemmatization = False,
                  stemming = False,
@@ -90,10 +95,6 @@ def reviews_preprocessor(reviews,
         clean_text = " ".join(clean_text)
         #Remove space before punctuation
         clean_text = re.sub(r'(\s)(?!\w)','',clean_text)
-        
-    elif bert_tokenization:
-        tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-        clean_text = tokenizer.tokenize(clean_text) 
 
     if sentence_output:
         clean_text = sent_tokenize(str(clean_text))
@@ -106,9 +107,6 @@ def reviews_preprocessor(reviews,
 def lstm_preprocessing(dataset: pd.DataFrame, tokenizer=word_tokenize):
     random.seed(20)
     np.random.seed(20)
-
-    #Create new column, convert scoring into 3 categories
-    dataset["Sentiment"] = dataset["Overall Rating"].apply(score_convert_senti)
 
     #place reviews column textual data into list
     reviews = dataset["Reviews"]
@@ -142,6 +140,7 @@ def lstm_preprocessing(dataset: pd.DataFrame, tokenizer=word_tokenize):
 
     return ret_dataset
 
+    
 
 #internal function to check for emojis
 def _contain_emoji(review):
@@ -176,3 +175,38 @@ def _glove_embed(tokenized_reviews):
     print(f'{len(unidentified_tokens)} total tokens not in GloVe model: \n{unidentified_tokens}')
 
     return rev_tokenized_embedded
+
+#preprocessing function for Logreg and Randforrest
+
+def preprocess_reviews(text):
+    # Convert text to lowercase
+    text = text.astype(str).str.lower()
+    
+    # Remove emojis
+    text = text.apply(lambda x: emoji.demojize(x))
+    text = text.str.replace(r':[a-z_]+:', ' ', regex=True)
+    
+    # Remove special characters and numbers
+    text = text.str.replace(r'[^a-zA-Z\s]', '', regex=True)
+    
+    # Tokenization (split the text into sentences)
+    sentences = text.apply(lambda x: sent_tokenize(x))
+    
+    # Flatten list of sentences
+    sentences = sentences.explode()
+    
+    # Tokenize sentences into words
+    words = sentences.apply(lambda x: word_tokenize(x))
+    
+    # Remove stopwords
+    stop_words = set(stopwords.words('english'))
+    words = words.apply(lambda x: [word for word in x if word not in stop_words])
+    
+    # Stemming
+    stemmer = PorterStemmer()
+    stemmed_words = words.apply(lambda x: [stemmer.stem(word) for word in x])
+    
+    # Join the words back into a single string
+    preprocessed_text = stemmed_words.apply(lambda x: ' '.join(x))
+    
+    return preprocessed_text
